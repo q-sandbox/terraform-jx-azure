@@ -80,28 +80,28 @@ module "registry" {
   resource_group_name = var.resource_group_name
 }
 
-#module "jx-boot" {
-#  source              = "./terraform-jx-boot"
-#  depends_on          = [module.cluster]
-#  jx_git_url          = var.jx_git_url
-#  jx_bot_username     = var.jx_bot_username
-#  jx_bot_token        = var.jx_bot_token
-#  job_secret_env_vars = local.job_secret_env_vars
-#  install_vault       = !var.key_vault_enabled
-#}
+module "jx-boot" {
+  source              = "./terraform-jx-boot"
+  depends_on          = [module.cluster]
+  jx_git_url          = var.jx_git_url
+  jx_bot_username     = var.jx_bot_username
+  jx_bot_token        = var.jx_bot_token
+  job_secret_env_vars = local.job_secret_env_vars
+  install_vault       = !var.key_vault_enabled
+}
 
-#module "dns" {
-#  source                          = "./terraform-jx-azuredns"
-#  enabled                         = var.dns_enabled
-#  apex_domain_integration_enabled = var.apex_domain_integration_enabled
-#  apex_domain_name                = var.apex_domain_name
-#  apex_resource_group_name        = var.apex_resource_group_name
-#  cluster_name                    = local.cluster_name
-#  domain_name                     = var.domain_name
-#  location                        = var.location
-#  principal_id                    = module.cluster.kubelet_identity_id
-#  resource_group_name             = var.resource_group_name
-#}
+module "dns" {
+  source                          = "./terraform-jx-azuredns"
+  enabled                         = var.dns_enabled
+  apex_domain_integration_enabled = var.apex_domain_integration_enabled
+  apex_domain_name                = var.apex_domain_name
+  apex_resource_group_name        = var.apex_resource_group_name
+  cluster_name                    = local.cluster_name
+  domain_name                     = var.domain_name
+  location                        = var.location
+  principal_id                    = module.cluster.kubelet_identity_id
+  resource_group_name             = var.resource_group_name
+}
 
 module "secrets" {
   source              = "./terraform-jx-azurekeyvault"
